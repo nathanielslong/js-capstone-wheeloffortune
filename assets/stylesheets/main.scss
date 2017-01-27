@@ -1,0 +1,17 @@
+.space {
+  height: 50px;
+  width: 50px;
+  margin: 10px;
+  background-color: white;
+}
+
+.letter  {
+  height: 50px;
+  width: 50px;
+  margin: 10px;
+  background-color: black; 
+}
+
+@for $i from 0 through 100 {
+  #letter-#{$i} {display: inline-block}
+}
