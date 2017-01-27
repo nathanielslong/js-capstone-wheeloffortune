@@ -1,3 +1,9 @@
+.guesses {
+  display: none; }
+
+form {
+  display: none; }
+
 .space {
   height: 50px;
   width: 50px;
@@ -9,6 +15,12 @@
   width: 50px;
   margin: 10px;
   background-color: black; }
+
+.not-letter {
+  height: 50px;
+  width: 50px;
+  margin: 10px;
+  background-color: white; }
 
 #letter-0 {
   display: inline-block; }
