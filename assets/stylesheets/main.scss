@@ -1,3 +1,13 @@
+@import 'bourbon/bourbon';
+
+.guesses {
+  display: none;
+}
+
+form {
+  display: none;
+}
+
 .space {
   height: 50px;
   width: 50px;
@@ -10,6 +20,13 @@
   width: 50px;
   margin: 10px;
   background-color: black; 
+}
+
+.not-letter  {
+  height: 50px;
+  width: 50px;
+  margin: 10px;
+  background-color: white; 
 }
 
 @for $i from 0 through 100 {
