@@ -83,6 +83,7 @@ function makeBoard(phrase) {
 
 // Takes a user inputted guess and determines if it exists in the array. When completed, prompt to play again, and remove completed puzzle from options.
 var guesses = [];
+var lives = 10;
 function makeGuess(letter) {
   var guess = $("input").val().toLowerCase();
   phraseArray = selectPhrase.split("");
@@ -104,7 +105,15 @@ function makeGuess(letter) {
         }
         if (answerArray.length == 0) {
           $("#correctness").text("Guess Again!");
+          lives--;
           $("#letter-guessed").append(guess + " ");
+          $("#lives").html("Lives Remaining: " + lives);
+          if (lives == 0) {
+            $("#correctness").text("You lose!");
+            $("form").hide();
+            $(".play-again").show();
+            $("#letter-guessed").hide().html("Incorrect Letters: ");
+          }
         } else {
           $("#correctness").text("Correct!");
           for (i=0;i<answerArray.length;i++) {
@@ -135,6 +144,7 @@ $("#movieQuotes").click(function() {
   } else {
   selectPhrase = categories[0].puzzles[randNum].phrase
   $("#correctness").html("");
+  $("#lives").fadeIn();
   $(".initial-page").fadeOut();
   $("form").fadeIn();
   $(".guesses").fadeIn();
@@ -151,6 +161,7 @@ $("#philosophers").click(function() {
   selectPhrase = categories[1].puzzles[randNum].phrase
   $("#correctness").html("");
   $(".initial-page").fadeOut();
+  $("#lives").fadeIn();
   $("form").fadeIn();
   $(".guesses").fadeIn();
   makeBoard(selectPhrase);
@@ -166,6 +177,7 @@ $("#chemistry").click(function() {
     selectPhrase = chemistry.puzzles[randNum].phrase
     $("#correctness").html("");
     $(".initial-page").fadeOut();
+    $("#lives").fadeIn();
     $("form").fadeIn();
     $(".guesses").fadeIn();
     makeBoard(selectPhrase);
@@ -185,6 +197,7 @@ $(".play-again").click(function() {
       categories[i].puzzles.splice(randNum, 1);
     }
   }
+  lives = 10;
   $(".initial-page").fadeIn();
   $("#gameboard").html("");
   // so this line should actually work, but I can't get it to work to reset the input.
