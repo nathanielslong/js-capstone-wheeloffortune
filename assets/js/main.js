@@ -130,33 +130,46 @@ function makeGuess(letter) {
 $("#movieQuotes").click(function() {
   category = "Movie Quotes";
   randNum = getRandomInt(0, categories[0].puzzles.length - 1);
+  if (categories[1].puzzles.length == 0) {
+    $("#correctness").show().html("Out of movie quotes! Try another category!");
+  } else {
   selectPhrase = categories[0].puzzles[randNum].phrase
+  $("#correctness").html("");
   $(".initial-page").fadeOut();
   $("form").fadeIn();
   $(".guesses").fadeIn();
   makeBoard(selectPhrase);
-})
+}})
 
 // Sets the philosophers object so that when clicked, it gets a random puzzle and sets up the board. 
 $("#philosophers").click(function() {
   category = "Famous Philosophers";
   randNum = getRandomInt(0, categories[1].puzzles.length - 1);
+  if (categories[1].puzzles.length == 0) {
+    $("#correctness").show().html("Out of philosophy questions! Try another category!");
+  } else {
   selectPhrase = categories[1].puzzles[randNum].phrase
+  $("#correctness").html("");
   $(".initial-page").fadeOut();
   $("form").fadeIn();
   $(".guesses").fadeIn();
   makeBoard(selectPhrase);
-})
+}})
 
 // Sets the chemistry object so that when clicked, it gets a random puzzle and sets up the board. 
 $("#chemistry").click(function() {
   category = "Chemistry-related questions";
   randNum = getRandomInt(0, categories[2].puzzles.length - 1);
-  selectPhrase = chemistry.puzzles[randNum].phrase
-  $(".initial-page").fadeOut();
-  $("form").fadeIn();
-  $(".guesses").fadeIn();
-  makeBoard(selectPhrase);
+  if (categories[2].puzzles.length == 0) {
+    $("#correctness").show().html("Out of chemistry questions! Try another category!");
+  } else{
+    selectPhrase = chemistry.puzzles[randNum].phrase
+    $("#correctness").html("");
+    $(".initial-page").fadeOut();
+    $("form").fadeIn();
+    $(".guesses").fadeIn();
+    makeBoard(selectPhrase);
+  }
 })
 
 // Prevents the form object from doing its default page-switching nonsense and starts the guess function.
