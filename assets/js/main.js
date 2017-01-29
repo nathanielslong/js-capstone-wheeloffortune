@@ -78,26 +78,39 @@ function makeBoard(phrase) {
   }
 }
 
-// Takes a user inputted guess and determines if it exists in the array. Still needs a way to tell if the puzzle is completed. Also needs something to track what guesses have been done.
+// Takes a user inputted guess and determines if it exists in the array. Still needs a way to tell if the puzzle is completed.  
+var guesses = [];
 function makeGuess(letter) {
   var guess = $("input").val();
-  var answerArray = [];
-  var phraseArray = selectPhrase.split("");
-  for (i=0;i<phraseArray.length;i++) {
-    if (guess == phraseArray[i].toLowerCase()) {
-      answerArray.push(i);
-    }
-  }
-  if (answerArray.length == 0) {
-    $("#correctness").text("Guess Again!");
-    $("#letter-guessed").append(guess + " ");
+  var counter = 0;
+  if (/[a-z]/i.test(guess) == false || guess.length > 1) {
+    $("#correctness").text("That's not allowed, try again!");
   } else {
-    $("#correctness").text("Correct!");
-    for (i=0;i<answerArray.length;i++) {
-      var letter = phraseArray[answerArray[i]];
-      phraseArray.splice[answerArray[i]];
-      $("#letter-" + answerArray[i]).html(letter);
-      $("#letter-" + answerArray[i]).css({"background-color": "white"})
+    if (guesses == []) {
+      guesses.push(guess);
+    } else if ($.inArray(guess, guesses) != -1) {
+        $("#correctness").text("You already guessed that!");
+    } else {
+        guesses.push(guess);
+        var answerArray = [];
+        var phraseArray = selectPhrase.split("");
+        for (i=0;i<phraseArray.length;i++) {
+          if (guess == phraseArray[i].toLowerCase()) {
+            answerArray.push(i);
+          }
+        }
+        if (answerArray.length == 0) {
+          $("#correctness").text("Guess Again!");
+          $("#letter-guessed").append(guess + " ");
+        } else {
+          $("#correctness").text("Correct!");
+          for (i=0;i<answerArray.length;i++) {
+            var letter = phraseArray[answerArray[i]];
+            phraseArray.splice[answerArray[i]];
+            $("#letter-" + answerArray[i]).html(letter);
+            $("#letter-" + answerArray[i]).css({"background-color": "white"})
+        }
+      }
     }
   }
 }
