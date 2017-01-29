@@ -17,15 +17,16 @@ function Category(title) {
   this.title = title;
   this.puzzles = [];
 }
-
+var categories = [];
 // Adding puzzles and pushing to categories.
-var goneWithWind= new Puzzle("frankly, my dear, i don't give a damn");
+var goneWithWind= new Puzzle("Frankly, my dear, I don't give a damn");
 var wizardOz= new Puzzle("Toto, I've a feeling we're not in Kansas anymore");
 var citizenKane = new Puzzle("Rosebud");
 var starWars = new Puzzle("May the Force be with you");
 var casaBlanca= new Puzzle("Here's looking at you, kid");
 var movieQuotes = new Category("Movie Quotes");
 movieQuotes.puzzles.push(goneWithWind, wizardOz, citizenKane, starWars, casaBlanca);
+categories.push(movieQuotes);
 
 var confuscious = new Puzzle("Confuscious");
 var immKant = new Puzzle("Immanuel Kant");
@@ -34,6 +35,7 @@ var petSing = new Puzzle("Peter Singer");
 var aristotle = new Puzzle("Aristotle");
 var philosophers = new Category("Famous Philosophers");
 philosophers.puzzles.push(confuscious, immKant, davHume, petSing, aristotle);
+categories.push(philosophers);
 
 var hydrogen = new Puzzle("Hydrogen");
 var indium = new Puzzle("Indium");
@@ -42,6 +44,7 @@ var erlen = new Puzzle("Erlenmeyer");
 var spectro = new Puzzle("Spectroscopy");
 var chemistry = new Category("Chemistry-related questions");
 chemistry.puzzles.push(hydrogen, indium, polSty, erlen, spectro);
+categories.push(chemistry);
 
 // Gives a random number in a certain range, which we need to give a random selection from a certain category.
 function getRandomInt(min, max) {
@@ -53,13 +56,13 @@ function getRandomInt(min, max) {
 // Generates a new puzzle board given the randomly selected phrase.
 function makeBoard(phrase) {
   var newPhrase = phrase.replace(/[a-zA-Z]/g, "?");
-  var phraseArray = newPhrase.split("");
+  questionArray= newPhrase.split("");
   var gameBoard = "";
-  for (i=0;i<phraseArray.length;i++) {
+  for (i=0;i<questionArray.length;i++) {
     var addedClass;
-    if (phraseArray[i] == " ") {
+    if (questionArray[i] == " ") {
       addedClass = "space";
-    } else if (phraseArray[i] == "?") {
+    } else if (questionArray[i] == "?") {
       addedClass = "letter";
     } else {
       addedClass = "not-letter";
@@ -68,20 +71,21 @@ function makeBoard(phrase) {
   }
   $("#gameboard").html(gameBoard);
   var notLetIndex = [];
-  for (i=0;i<phraseArray.length;i++) {
-    if (/[a-z]/i.test(phraseArray[i]) == false) {
+  for (i=0;i<questionArray.length;i++) {
+    if (/[a-z]/i.test(questionArray[i]) == false) {
       notLetIndex.push(i);
     }
   } 
   for (i=0;i<notLetIndex.length;i++) {
-    $("#letter-" + notLetIndex[i]).html(phraseArray[notLetIndex[i]]);
+    $("#letter-" + notLetIndex[i]).html(questionArray[notLetIndex[i]]);
   }
 }
 
-// Takes a user inputted guess and determines if it exists in the array. Still needs a way to tell if the puzzle is completed.  
+// Takes a user inputted guess and determines if it exists in the array. When completed, prompt to play again, and remove completed puzzle from options.
 var guesses = [];
 function makeGuess(letter) {
-  var guess = $("input").val();
+  var guess = $("input").val().toLowerCase();
+  phraseArray = selectPhrase.split("");
   var counter = 0;
   if (/[a-z]/i.test(guess) == false || guess.length > 1) {
     $("#correctness").text("That's not allowed, try again!");
@@ -93,7 +97,6 @@ function makeGuess(letter) {
     } else {
         guesses.push(guess);
         var answerArray = [];
-        var phraseArray = selectPhrase.split("");
         for (i=0;i<phraseArray.length;i++) {
           if (guess == phraseArray[i].toLowerCase()) {
             answerArray.push(i);
@@ -107,8 +110,16 @@ function makeGuess(letter) {
           for (i=0;i<answerArray.length;i++) {
             var letter = phraseArray[answerArray[i]];
             phraseArray.splice[answerArray[i]];
+            questionArray.splice[answerArray[i]];
+            questionArray[answerArray[i]] = phraseArray[answerArray[i]];
             $("#letter-" + answerArray[i]).html(letter);
             $("#letter-" + answerArray[i]).css({"background-color": "white"})
+        }
+        if (phraseArray.join("") == questionArray.join("")) {
+          $("#correctness").text("You win!");
+          $("form").hide();
+          $(".play-again").show();
+          $("#letter-guessed").hide().html("Incorrect Letters: ");
         }
       }
     }
@@ -117,8 +128,9 @@ function makeGuess(letter) {
 
 // Sets the movieQuote object so that when clicked, it gets a random puzzle and sets up the board. 
 $("#movieQuotes").click(function() {
-  randNum = getRandomInt(0, movieQuotes.puzzles.length - 1);
-  selectPhrase = movieQuotes.puzzles[randNum].phrase
+  category = "Movie Quotes";
+  randNum = getRandomInt(0, categories[0].puzzles.length - 1);
+  selectPhrase = categories[0].puzzles[randNum].phrase
   $(".initial-page").fadeOut();
   $("form").fadeIn();
   $(".guesses").fadeIn();
@@ -127,8 +139,9 @@ $("#movieQuotes").click(function() {
 
 // Sets the philosophers object so that when clicked, it gets a random puzzle and sets up the board. 
 $("#philosophers").click(function() {
-  randNum = getRandomInt(0, philosophers.puzzles.length - 1);
-  selectPhrase = philosophers.puzzles[randNum].phrase
+  category = "Famous Philosophers";
+  randNum = getRandomInt(0, categories[1].puzzles.length - 1);
+  selectPhrase = categories[1].puzzles[randNum].phrase
   $(".initial-page").fadeOut();
   $("form").fadeIn();
   $(".guesses").fadeIn();
@@ -137,7 +150,8 @@ $("#philosophers").click(function() {
 
 // Sets the chemistry object so that when clicked, it gets a random puzzle and sets up the board. 
 $("#chemistry").click(function() {
-  randNum = getRandomInt(0, chemistry.puzzles.length - 1);
+  category = "Chemistry-related questions";
+  randNum = getRandomInt(0, categories[2].puzzles.length - 1);
   selectPhrase = chemistry.puzzles[randNum].phrase
   $(".initial-page").fadeOut();
   $("form").fadeIn();
@@ -149,4 +163,20 @@ $("#chemistry").click(function() {
 $("form").submit(function (e) {
   e.preventDefault();
   makeGuess($("input").val());
+})
+
+// Removes previous puzzle from the options, and returns the user to the inial load screen by hiding all previous elements.
+$(".play-again").click(function() {
+  for (i=0;i<categories.length;i++) {
+    if (categories[i].title == category) {
+      categories[i].puzzles.splice(randNum, 1);
+    }
+  }
+  $(".initial-page").fadeIn();
+  $("#gameboard").html("");
+  // so this line should actually work, but I can't get it to work to reset the input.
+  $("#guess").trigger("reset");
+  $(".new-game").hide();
+  $("#correctness").html("");
+  guesses = [];
 })

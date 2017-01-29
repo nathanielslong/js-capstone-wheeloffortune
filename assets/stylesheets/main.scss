@@ -1,10 +1,6 @@
 @import 'bourbon/bourbon';
 
-.guesses {
-  display: none;
-}
-
-form {
+.guesses, .play-again, form {
   display: none;
 }
 
