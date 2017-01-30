@@ -203,6 +203,7 @@ $(".play-again").click(function() {
   // so this line should actually work, but I can't get it to work to reset the input.
   $("#guess").trigger("reset");
   $(".new-game").hide();
+  $("#lives").html("Lives Remaining: " + lives).hide();
   $("#correctness").html("");
   guesses = [];
 })
