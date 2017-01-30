@@ -75,7 +75,7 @@ function makeBoard(phrase) {
     if (/[a-z]/i.test(questionArray[i]) == false) {
       notLetIndex.push(i);
     }
-  } 
+  }
   for (i=0;i<notLetIndex.length;i++) {
     $("#letter-" + notLetIndex[i]).html(questionArray[notLetIndex[i]]);
   }
@@ -135,6 +135,22 @@ function makeGuess(letter) {
   }
 }
 
+// Allows the user to input a string to attempt to solve the puzzle. If correct, display the solved puzzle. Else, lose a life.
+function solvePuzzle(fullGuess) {
+  var fullArray = fullGuess.toLowerCase().split("");
+  var newPhraseArray = selectPhrase.toLowerCase().split("");
+  if (fullArray.join("") == newPhraseArray.join("")) {
+    $("#correctness").text("You win!");
+    $("form").hide();
+    $(".play-again").show();
+    $("#letter-guessed").hide().html("Incorrect Letters: ");
+  } else {
+    $("#correctness").html("Incorrect!");
+    lives--;
+    $("#lives").html("Lives Remaining: " + lives);
+  }
+}
+
 // Sets the movieQuote object so that when clicked, it gets a random puzzle and sets up the board. 
 $("#movieQuotes").click(function() {
   category = "Movie Quotes";
@@ -185,9 +201,9 @@ $("#chemistry").click(function() {
 })
 
 // Prevents the form object from doing its default page-switching nonsense and starts the guess function.
-$("form").submit(function (e) {
+$("#guessing").click(function (e) {
   e.preventDefault();
-  makeGuess($("input").val());
+  makeGuess($("#guess").val());
 })
 
 // Removes previous puzzle from the options, and returns the user to the inial load screen by hiding all previous elements.
@@ -206,4 +222,10 @@ $(".play-again").click(function() {
   $("#lives").html("Lives Remaining: " + lives).hide();
   $("#correctness").html("");
   guesses = [];
+})
+
+// Sets up the puzzle solve event
+$("#solving").click(function (e) {
+  e.preventDefault();
+  solvePuzzle($("#solution").val());
 })

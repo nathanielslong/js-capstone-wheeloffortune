@@ -13,12 +13,18 @@
     <h4 class="initial-page" id="chemistry">Chemistry-related questions</h4>
     <div id="gameboard"></div>
     <form>
-      <label for="guess">Guess (Value then Enter)</label>
+      <label for="guess">Guess</label>
       <input type="text" name="guess" id="guess">
+      <button id="guessing">Guess</button>
     </form>
     <h3 id="lives">Lives Remaining: 10</h3>
     <div class="guesses new-game" id="letter-guessed">Incorrect Letters: </div>
     <h3 class="guesses new-game" id="correctness"></h3>
+    <form>
+      <label for="solution">Solve the Puzzle?</label>
+      <input type="text" name="solution" id="solution">
+      <button id="solving">Solve the Puzzle</button>
+    </form>
     <button class="play-again new-game">Play again?</button>
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
     <script src="assets/js/bootstrap.js"></script>
