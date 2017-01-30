@@ -138,13 +138,30 @@ function makeGuess(letter) {
 // Allows the user to input a string to attempt to solve the puzzle. If correct, display the solved puzzle. Else, lose a life.
 function solvePuzzle(fullGuess) {
   var fullArray = fullGuess.toLowerCase().split("");
-  var newPhraseArray = selectPhrase.toLowerCase().split("");
-  if (fullArray.join("") == newPhraseArray.join("")) {
+  var newPhraseArray = selectPhrase.split("");
+  var lowerCaseArray = newPhraseArray.join("").toLowerCase().split("");
+  if (fullArray.join("") == lowerCaseArray.join("")) {
     $("#correctness").text("You win!");
     $("form").hide();
+    var gameBoard = "";
+    for (i=0;i<newPhraseArray.length;i++) {
+      var addedClass;
+      if (newPhraseArray[i] == " ") {
+        addedClass = "space";
+      } else if (/[a-z]/i.test(newPhraseArray[i]) == true){
+        addedClass = "letter";
+      } else {
+        addedClass = "not-letter";
+      }
+      gameBoard += "<div class=" + addedClass +" id='letter-" + i + "'></div>";
+    }
+    $("#gameboard").html(gameBoard);
+    for (i=0;i<newPhraseArray.length;i++) {
+      $("#letter-" + i).html(newPhraseArray[i]).css({"background-color": "white"});
+    }
     $(".play-again").show();
     $("#letter-guessed").hide().html("Incorrect Letters: ");
-  } else {
+    } else {
     $("#correctness").html("Incorrect!");
     lives--;
     $("#lives").html("Lives Remaining: " + lives);
