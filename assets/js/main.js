@@ -1,10 +1,11 @@
-// Set up a wheel.
+// Set up a wheel. Credit to Roku CB.
+/*
 function rand(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-var color = ['#fbc','#f88','#fbc','#f88','#fbc','#f88', "#fbc", "#f67"];
-var label = ['10', '200', '50', '100', '5', '500', '0', "jPOT"];
+var color = ['#fbc','#f88','#fbc','#f88','#fbc','#f88', "#fbc", "#f67", "#f89"];
+var label = ['10', '200', '50', '100', '5', '500', '300', "10000", ":("];
 var slices = color.length;
 var sliceDeg = 360/slices;
 var deg = rand(0, 360);
@@ -79,7 +80,7 @@ function drawImg() {
 document.getElementById("spin").addEventListener("mousedown", function(){
   isStopped = true;
 }, false);
-
+*/
 
 // Defining the Puzzle object.
 function Puzzle(phrase) {

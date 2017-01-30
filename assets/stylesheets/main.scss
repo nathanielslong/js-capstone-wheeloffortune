@@ -1,5 +1,13 @@
 @import 'bourbon/bourbon';
 
+button {
+  background-color: black;
+}
+
+input {
+  color: black;
+}
+
 .guesses, #lives, .play-again, form {
   display: none;
 }
@@ -8,7 +16,8 @@
   height: 50px;
   width: 50px;
   margin: 10px;
-  background-color: white;
+  background-color: red;
+  opacity: 0;
 }
 
 .letter  {
@@ -22,7 +31,7 @@
   height: 50px;
   width: 50px;
   margin: 10px;
-  background-color: white; 
+  background-color: blue; 
 }
 
 @for $i from 0 through 100 {
