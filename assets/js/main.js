@@ -252,10 +252,10 @@ $("#movieQuotes").click(function() {
   } else {
   selectPhrase = categories[0].puzzles[randNum].phrase
   $("#correctness").html("");
-  $("#lives").fadeIn();
-  $(".initial-page").fadeOut();
-  $("form").fadeIn();
-  $(".guesses").fadeIn();
+  $("#lives").show();
+  $(".initial-page").hide();
+  $("form").show();
+  $(".guesses").show();
   makeBoard(selectPhrase);
 }})
 
@@ -268,10 +268,10 @@ $("#philosophers").click(function() {
   } else {
   selectPhrase = categories[1].puzzles[randNum].phrase
   $("#correctness").html("");
-  $(".initial-page").fadeOut();
-  $("#lives").fadeIn();
-  $("form").fadeIn();
-  $(".guesses").fadeIn();
+  $(".initial-page").hide();
+  $("#lives").show();
+  $("form").show();
+  $(".guesses").show();
   makeBoard(selectPhrase);
 }})
 
@@ -284,10 +284,10 @@ $("#chemistry").click(function() {
   } else{
     selectPhrase = chemistry.puzzles[randNum].phrase
     $("#correctness").html("");
-    $(".initial-page").fadeOut();
-    $("#lives").fadeIn();
-    $("form").fadeIn();
-    $(".guesses").fadeIn();
+    $(".initial-page").hide();
+    $("#lives").show();
+    $("form").show();
+    $(".guesses").show();
     makeBoard(selectPhrase);
   }
 })
@@ -306,7 +306,7 @@ $(".play-again").click(function() {
     }
   }
   lives = 10;
-  $(".initial-page").fadeIn();
+  $(".initial-page").show();
   $("#gameboard").html("");
   // so this line should actually work, but I can't get it to work to reset the input.
   $("#guess").trigger("reset");

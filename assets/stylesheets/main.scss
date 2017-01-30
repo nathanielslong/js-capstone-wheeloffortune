@@ -1,5 +1,9 @@
 @import 'bourbon/bourbon';
 
+html, body {
+  background-image: url("assets/images/wheel-of-fortune.jpeg")
+}
+
 button {
   background-color: black;
 }
@@ -34,6 +38,9 @@ input {
   background-color: blue; 
 }
 
+#gameboard {
+}
+
 @for $i from 0 through 100 {
-  #letter-#{$i} {display: inline-block}
+  #letter-#{$i} {display: inline-block; color: black; vertical-align: baseline; float: none; font-size: 25px;}
 }
