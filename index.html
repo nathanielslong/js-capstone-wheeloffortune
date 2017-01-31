@@ -9,12 +9,12 @@
   <body>
     <div class="site-wrapper">
       <div class="site-wrapper-inner">
-        <div class="cover-container">
+        <div class="container">
           <div class="masthead clearfix">
             <div class="inner">
             </div>
           </div>
-          <div class="inner cover">
+          <div class="inner cover col-md-12 text-center animated fadeIn">
             <h1 class="cover-heading">WHEEL OF FORTUNE<h1>
             <h3 class="initial-page">Pick a category:</h3>
             <h4 class="initial-page" id="movieQuotes">Movie Quotes</h4>
@@ -23,17 +23,21 @@
             <div class="col-md-12 center-block">
               <div class="" id="gameboard"></div>
             </div>
-    <!--    <div id="wheel">
-              <canvas id="canvas" width="300" height="300"></canvas>
+            <div class="wheel">
+              <div id="wheel">
+                <canvas id="canvas" width="300" height="300"></canvas>
+              </div>
+              <br>
+              <button id="start-spin">Spin the wheel!</button>
+              <button id="spin">Stop!</button>
             </div>
-            <br>
-            <button id="spin">Stop!</button>
--->
             <form>
               <label for="guess">Guess</label>
               <input type="text" name="guess" id="guess">
               <button id="guessing">Guess</button>
             </form>
+            <h3 id="point-value"></h3>
+            <h3 id="point-total">Total points: 0</h3>
             <h3 id="lives">Lives Remaining: 10</h3>
             <div class="guesses new-game" id="letter-guessed">Incorrect Letters: </div>
             <h3 class="guesses new-game" id="correctness"></h3>

@@ -1,5 +1,6 @@
 html, body {
-  background-image: url("assets/images/wheel-of-fortune.jpeg"); }
+  background-image: url("assets/images/wheel-of-fortune.jpeg");
+  font-color: #faebd7; }
 
 button {
   background-color: black; }
@@ -7,14 +8,13 @@ button {
 input {
   color: black; }
 
-.guesses, #lives, .play-again, form {
+.guesses, #lives, .play-again, form, .wheel {
   display: none; }
 
 .space {
   height: 50px;
   width: 50px;
   margin: 10px;
-  background-color: red;
   opacity: 0; }
 
 .letter {
@@ -26,8 +26,7 @@ input {
 .not-letter {
   height: 50px;
   width: 50px;
-  margin: 10px;
-  background-color: blue; }
+  margin: 10px; }
 
 #letter-0 {
   display: inline-block;

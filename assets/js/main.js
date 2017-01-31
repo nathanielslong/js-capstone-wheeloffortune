@@ -1,11 +1,11 @@
 // Set up a wheel. Credit to Roku CB.
-/*
+var score = 0;
 function rand(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-var color = ['#fbc','#f88','#fbc','#f88','#fbc','#f88', "#fbc", "#f67", "#f89"];
-var label = ['10', '200', '50', '100', '5', '500', '300', "10000", ":("];
+var color = ['#5c5c8a','#52527a','#5c5c8a','#52527a','#5c5c8a','#52527a', "#5c5c8a", "#52527a", "#5c5c8a"];
+var label = ['10', '200', '50', '100', '5', '500', '300', "75", ":("];
 var slices = color.length;
 var sliceDeg = 360/slices;
 var deg = rand(0, 360);
@@ -50,37 +50,44 @@ function drawImg() {
   }
 }
 
-(function anim() {
-  deg += speed;
-  deg %= 360;
+function spinWheel() {
+  (function anim() {
+    drawImg();
+    deg += speed;
+    deg %= 360;
 
-  // Increment speed
-  if(!isStopped && speed<3){
-    speed = speed+1 * 0.1;
-  }
-  // Decrement Speed
-  if(isStopped){
-    if(!lock){
-      lock = true;
-      slowDownRand = rand(0.994, 0.998);
+    // Increment speed
+    if(!isStopped && speed<3){
+      speed = speed+1 * 0.1;
     }
-    speed = speed>0.2 ? speed*=slowDownRand : 0;
-  }
-  // Stopped!
-  if(lock && !speed){
-    var ai = Math.floor(((360 - deg - 90) % 360) / sliceDeg); // deg 2 Array Index
-    ai = (slices+ai)%slices; // Fix negative index
-    return alert("You got:\n"+ label[ai] ); // Get Array Item from end Degree
-  }
-
-  drawImg();
+    // Decrement Speed
+    if(isStopped){
+      if(!lock){
+        lock = true;
+        slowDownRand = rand(0.95, 0.96);
+      }
+      speed = speed>0.2 ? speed*=slowDownRand : 0;
+    }
+    // Stopped!
+    if(lock && !speed){
+      var ai = Math.floor(((360 - deg - 90) % 360) / sliceDeg); // deg 2 Array Index
+      ai = (slices+ai)%slices; // Fix negative index
+      value = label[ai];
+      if (value == ":(") {
+        lives--;
+        $("#point-value").html("Sorry, bad luck. Try again!");
+      } else {
+        $("#point-value").html("Point value is: " + value);
+      }
+    }
   window.requestAnimationFrame( anim );
 }());
 
 document.getElementById("spin").addEventListener("mousedown", function(){
   isStopped = true;
 }, false);
-*/
+
+}
 
 // Defining the Puzzle object.
 function Puzzle(phrase) {
@@ -252,10 +259,8 @@ $("#movieQuotes").click(function() {
   } else {
   selectPhrase = categories[0].puzzles[randNum].phrase
   $("#correctness").html("");
-  $("#lives").show();
-  $(".initial-page").hide();
-  $("form").show();
-  $(".guesses").show();
+  $(".wheel").show();
+  drawImg();
   makeBoard(selectPhrase);
 }})
 
@@ -268,10 +273,8 @@ $("#philosophers").click(function() {
   } else {
   selectPhrase = categories[1].puzzles[randNum].phrase
   $("#correctness").html("");
-  $(".initial-page").hide();
-  $("#lives").show();
-  $("form").show();
-  $(".guesses").show();
+  $(".wheel").show();
+  drawImg();
   makeBoard(selectPhrase);
 }})
 
@@ -284,10 +287,8 @@ $("#chemistry").click(function() {
   } else{
     selectPhrase = chemistry.puzzles[randNum].phrase
     $("#correctness").html("");
-    $(".initial-page").hide();
-    $("#lives").show();
-    $("form").show();
-    $(".guesses").show();
+    $(".wheel").show();
+    drawImg();
     makeBoard(selectPhrase);
   }
 })
@@ -313,6 +314,7 @@ $(".play-again").click(function() {
   $(".new-game").hide();
   $("#lives").html("Lives Remaining: " + lives).hide();
   $("#correctness").html("");
+  $(".wheel").hide();
   guesses = [];
 })
 
@@ -320,4 +322,15 @@ $(".play-again").click(function() {
 $("#solving").click(function (e) {
   e.preventDefault();
   solvePuzzle($("#solution").val());
+})
+
+// Sets up the wheel spin event.
+$("#start-spin").click(function() {
+  spinWheel();
+  $(".initial-page").hide();
+  $("#lives").show();
+  $("form").show();
+  $(".guesses").show();
+  $(".wheel").show();
+  isStopped = false;
 })

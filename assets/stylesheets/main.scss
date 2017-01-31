@@ -1,7 +1,8 @@
 @import 'bourbon/bourbon';
 
 html, body {
-  background-image: url("assets/images/wheel-of-fortune.jpeg")
+  background-image: url("assets/images/wheel-of-fortune.jpeg");
+  font-color: #faebd7;
 }
 
 button {
@@ -12,7 +13,7 @@ input {
   color: black;
 }
 
-.guesses, #lives, .play-again, form {
+.guesses, #lives, .play-again, form, .wheel{
   display: none;
 }
 
@@ -20,7 +21,6 @@ input {
   height: 50px;
   width: 50px;
   margin: 10px;
-  background-color: red;
   opacity: 0;
 }
 
@@ -35,7 +35,6 @@ input {
   height: 50px;
   width: 50px;
   margin: 10px;
-  background-color: blue; 
 }
 
 #gameboard {
