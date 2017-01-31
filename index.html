@@ -15,7 +15,7 @@
             </div>
           </div>
           <div class="inner cover col-md-12 text-center animated fadeIn">
-            <h1 class="cover-heading">WHEEL OF FORTUNE<h1>
+            <h1 class="cover-heading">THE EVER FASTER WHEEL OF FORTUNE<h1>
             <h3 class="initial-page">Pick a category:</h3>
             <h4 class="initial-page" id="movieQuotes">Movie Quotes</h4>
             <h4 class="initial-page" id="philosophers">Famous Philosophers</h4>
@@ -23,7 +23,7 @@
             <div class="col-md-12 center-block">
               <div class="" id="gameboard"></div>
             </div>
-            <div class="wheel">
+            <div class="wheel new-game">
               <div id="wheel">
                 <canvas id="canvas" width="300" height="300"></canvas>
               </div>
@@ -31,22 +31,26 @@
               <button id="start-spin">Spin the wheel!</button>
               <button id="spin">Stop!</button>
             </div>
-            <form>
+            <form class="new-game" id="guessing-things">
               <label for="guess">Guess</label>
               <input type="text" name="guess" id="guess">
               <button id="guessing">Guess</button>
             </form>
             <h3 id="point-value"></h3>
             <h3 id="point-total">Total points: 0</h3>
-            <h3 id="lives">Lives Remaining: 10</h3>
-            <div class="guesses new-game" id="letter-guessed">Incorrect Letters: </div>
+            <h3 id="lives">Lives Remaining: 5</h3>
+            <h5 class="guesses new-game" id="letter-guessed">Incorrect Letters: </h3>
             <h3 class="guesses new-game" id="correctness"></h3>
-            <form>
-              <label for="solution">Solve the Puzzle?</label>
-              <input type="text" name="solution" id="solution">
-              <button id="solving">Solve the Puzzle</button>
-            </form>
+            <div class="new-game" id="solving-things">
+              <form >
+                <label for="solution">Solve the Puzzle?</label>
+                <input type="text" name="solution" id="solution">
+                <button id="solving">Solve the Puzzle</button>
+              </form>
+            </div>
             <button class="play-again new-game">Play again?</button>
+            <button class="hint new-game">Hint</button>
+            <h3 id="hint"></h3>
           </div>
         </div>
       </div>

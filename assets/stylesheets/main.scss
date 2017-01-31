@@ -1,7 +1,6 @@
 @import 'bourbon/bourbon';
 
 html, body {
-  background-image: url("assets/images/wheel-of-fortune.jpeg");
   font-color: #faebd7;
 }
 
@@ -13,33 +12,33 @@ input {
   color: black;
 }
 
-.guesses, #lives, .play-again, form, .wheel{
+.guesses, #lives, .play-again, form, .wheel, #point-total, #hint, .hint {
   display: none;
 }
 
 .space {
-  height: 50px;
-  width: 50px;
-  margin: 10px;
+  height: 2em;
+  width: 2em;
+  margin: 0.5em;
   opacity: 0;
 }
 
 .letter  {
-  height: 50px;
-  width: 50px;
-  margin: 10px;
+  height: 2em;
+  width: 2em;
+  margin: 0.5em;
   background-color: black; 
 }
 
 .not-letter  {
-  height: 50px;
-  width: 50px;
-  margin: 10px;
+  height: 2em;
+  width: 2em;
+  margin: 0.5em;
 }
 
 #gameboard {
 }
 
 @for $i from 0 through 100 {
-  #letter-#{$i} {display: inline-block; color: black; vertical-align: baseline; float: none; font-size: 25px;}
+  #letter-#{$i} {display: inline-block; color: black; vertical-align: baseline; float: none; font-size: 1em;}
 }

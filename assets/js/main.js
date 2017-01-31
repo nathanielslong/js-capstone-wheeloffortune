@@ -1,3 +1,5 @@
+// Bug: when I try to play another game, the "Point Value is" and "Incorrect letters" lines retain even though I have code telling them to hide. I've tried hiding from the console and I can't get that to work either, so I'm leaving that as a..feature. Totally. 
+
 // Set up a wheel. Credit to Roku CB.
 var score = 0;
 function rand(min, max) {
@@ -5,7 +7,7 @@ function rand(min, max) {
 }
 
 var color = ['#5c5c8a','#52527a','#5c5c8a','#52527a','#5c5c8a','#52527a', "#5c5c8a", "#52527a", "#5c5c8a"];
-var label = ['10', '200', '50', '100', '5', '500', '300', "75", ":("];
+var label = ['10', '200', '50', '100', '5', '500', '300', "75", "25"];
 var slices = color.length;
 var sliceDeg = 360/slices;
 var deg = rand(0, 360);
@@ -53,6 +55,8 @@ function drawImg() {
 function spinWheel() {
   (function anim() {
     drawImg();
+    value = 0;
+    $("#point-value").html("Point value is: " + value);
     deg += speed;
     deg %= 360;
 
@@ -73,12 +77,10 @@ function spinWheel() {
       var ai = Math.floor(((360 - deg - 90) % 360) / sliceDeg); // deg 2 Array Index
       ai = (slices+ai)%slices; // Fix negative index
       value = label[ai];
-      if (value == ":(") {
-        lives--;
-        $("#point-value").html("Sorry, bad luck. Try again!");
-      } else {
-        $("#point-value").html("Point value is: " + value);
-      }
+      $("#point-value").show();
+      $("#point-value").html("Point value is: " + value);
+      $(".guesses").show();
+      $("#solving-things").show();
     }
   window.requestAnimationFrame( anim );
 }());
@@ -90,8 +92,9 @@ document.getElementById("spin").addEventListener("mousedown", function(){
 }
 
 // Defining the Puzzle object.
-function Puzzle(phrase) {
+function Puzzle(phrase, hint) {
   this.phrase = phrase;
+  this.hint = hint;
 }
 
 //Defining the Category object.
@@ -101,29 +104,29 @@ function Category(title) {
 }
 var categories = [];
 // Adding puzzles and pushing to categories.
-var goneWithWind= new Puzzle("Frankly, my dear, I don't give a damn");
-var wizardOz= new Puzzle("Toto, I've a feeling we're not in Kansas anymore");
-var citizenKane = new Puzzle("Rosebud");
-var starWars = new Puzzle("May the Force be with you");
-var casaBlanca= new Puzzle("Here's looking at you, kid");
+var goneWithWind= new Puzzle("Frankly, my dear, I don't give a damn", "Gone With the Wind");
+var wizardOz= new Puzzle("Toto, I've a feeling we're not in Kansas anymore", "Wizard of Oz");
+var citizenKane = new Puzzle("Rosebud", "Citizen Kane");
+var starWars = new Puzzle("May the Force be with you", "Star Wars");
+var casaBlanca= new Puzzle("Here's looking at you, kid", "Casablanca");
 var movieQuotes = new Category("Movie Quotes");
 movieQuotes.puzzles.push(goneWithWind, wizardOz, citizenKane, starWars, casaBlanca);
 categories.push(movieQuotes);
 
-var confuscious = new Puzzle("Confuscious");
-var immKant = new Puzzle("Immanuel Kant");
-var davHume = new Puzzle("David Hume");
-var petSing = new Puzzle("Peter Singer");
-var aristotle = new Puzzle("Aristotle");
+var confuscious = new Puzzle("Confuscious", "Chinese");
+var immKant = new Puzzle("Immanuel Kant", "German");
+var davHume = new Puzzle("David Hume", "English");
+var petSing = new Puzzle("Peter Singer", "American");
+var aristotle = new Puzzle("Aristotle", "Greek");
 var philosophers = new Category("Famous Philosophers");
 philosophers.puzzles.push(confuscious, immKant, davHume, petSing, aristotle);
 categories.push(philosophers);
 
-var hydrogen = new Puzzle("Hydrogen");
-var indium = new Puzzle("Indium");
-var polSty = new Puzzle("Polystyrene");
-var erlen = new Puzzle("Erlenmeyer");
-var spectro = new Puzzle("Spectroscopy");
+var hydrogen = new Puzzle("Hydrogen", "Lightest element");
+var indium = new Puzzle("Indium", "Soft metal used in semiconductor");
+var polSty = new Puzzle("Polystyrene", "Makes your coffee cups");
+var erlen = new Puzzle("Erlenmeyer", "Popular flask type");
+var spectro = new Puzzle("Spectroscopy", "A way of identifying elements");
 var chemistry = new Category("Chemistry-related questions");
 chemistry.puzzles.push(hydrogen, indium, polSty, erlen, spectro);
 categories.push(chemistry);
@@ -165,7 +168,7 @@ function makeBoard(phrase) {
 
 // Takes a user inputted guess and determines if it exists in the array. When completed, prompt to play again, and remove completed puzzle from options.
 var guesses = [];
-var lives = 10;
+var lives = 5;
 function makeGuess(letter) {
   var guess = $("input").val().toLowerCase();
   phraseArray = selectPhrase.split("");
@@ -190,25 +193,36 @@ function makeGuess(letter) {
           lives--;
           $("#letter-guessed").append(guess + " ");
           $("#lives").html("Lives Remaining: " + lives);
+          $("#guessing-things").hide();
           if (lives == 0) {
             $("#correctness").text("You lose!");
+            $("#point-value").html("");
             $("form").hide();
+            $(".wheel").hide();
             $(".play-again").show();
             $("#letter-guessed").hide().html("Incorrect Letters: ");
           }
         } else {
           $("#correctness").text("Correct!");
           for (i=0;i<answerArray.length;i++) {
+            score += parseInt(value);
             var letter = phraseArray[answerArray[i]];
             phraseArray.splice[answerArray[i]];
             questionArray.splice[answerArray[i]];
             questionArray[answerArray[i]] = phraseArray[answerArray[i]];
             $("#letter-" + answerArray[i]).html(letter);
             $("#letter-" + answerArray[i]).css({"background-color": "white"})
+            $("#point-total").html("Total points: " + score);
         }
+        value = 0;
+        $("#point-value").html("Point value is: 0");
+        $("#guessing-things").hide();
+        $("#solving-things").show();
         if (phraseArray.join("") == questionArray.join("")) {
           $("#correctness").text("You win!");
+          $("#point-value").html("");
           $("form").hide();
+          $(".wheel").hide();
           $(".play-again").show();
           $("#letter-guessed").hide().html("Incorrect Letters: ");
         }
@@ -224,7 +238,9 @@ function solvePuzzle(fullGuess) {
   var lowerCaseArray = newPhraseArray.join("").toLowerCase().split("");
   if (fullArray.join("") == lowerCaseArray.join("")) {
     $("#correctness").text("You win!");
+    $("#point-value").html("");
     $("form").hide();
+    $(".wheel").hide();
     var gameBoard = "";
     for (i=0;i<newPhraseArray.length;i++) {
       var addedClass;
@@ -258,8 +274,10 @@ $("#movieQuotes").click(function() {
     $("#correctness").show().html("Out of movie quotes! Try another category!");
   } else {
   selectPhrase = categories[0].puzzles[randNum].phrase
+  $("#hint").html(movieQuotes.puzzles[randNum].hint);
   $("#correctness").html("");
   $(".wheel").show();
+  $(".hint").show();
   drawImg();
   makeBoard(selectPhrase);
 }})
@@ -272,8 +290,10 @@ $("#philosophers").click(function() {
     $("#correctness").show().html("Out of philosophy questions! Try another category!");
   } else {
   selectPhrase = categories[1].puzzles[randNum].phrase
+  $("#hint").html(philosophers.puzzles[randNum].hint);
   $("#correctness").html("");
   $(".wheel").show();
+  $(".hint").show();
   drawImg();
   makeBoard(selectPhrase);
 }})
@@ -286,8 +306,10 @@ $("#chemistry").click(function() {
     $("#correctness").show().html("Out of chemistry questions! Try another category!");
   } else{
     selectPhrase = chemistry.puzzles[randNum].phrase
+    $("#hint").html(chemistry.puzzles[randNum].hint);
     $("#correctness").html("");
     $(".wheel").show();
+  $(".hint").show();
     drawImg();
     makeBoard(selectPhrase);
   }
@@ -306,15 +328,17 @@ $(".play-again").click(function() {
       categories[i].puzzles.splice(randNum, 1);
     }
   }
-  lives = 10;
+  score = 0;
+  lives = 5;
   $(".initial-page").show();
   $("#gameboard").html("");
-  // so this line should actually work, but I can't get it to work to reset the input.
-  $("#guess").trigger("reset");
   $(".new-game").hide();
   $("#lives").html("Lives Remaining: " + lives).hide();
   $("#correctness").html("");
+  $("#point-total").html("Total points: 0").hide();
+  // This line below should make the point value go away, but I can't get it to work. Leaving it in on the off chance I find a way to solve the issue.
   $(".wheel").hide();
+  $("#hint").hide();
   guesses = [];
 })
 
@@ -326,11 +350,17 @@ $("#solving").click(function (e) {
 
 // Sets up the wheel spin event.
 $("#start-spin").click(function() {
+  $("#point-value").hide();
   spinWheel();
   $(".initial-page").hide();
   $("#lives").show();
   $("form").show();
-  $(".guesses").show();
+  $("#point-total").show();
   $(".wheel").show();
   isStopped = false;
+})
+
+// Gives user a hint
+$(".hint").click(function() {
+  $("#hint").show()
 })
