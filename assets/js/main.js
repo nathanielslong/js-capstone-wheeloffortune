@@ -1,5 +1,3 @@
-// Bug: when I try to play another game, the "Point Value is" and "Incorrect letters" lines retain even though I have code telling them to hide. I've tried hiding from the console and I can't get that to work either, so I'm leaving that as a..feature. Totally. 
-
 // Set up a wheel. Credit to Roku CB.
 var score = 0;
 function rand(min, max) {
