@@ -272,6 +272,7 @@ $("#movieQuotes").click(function() {
     $("#correctness").show().html("Out of movie quotes! Try another category!");
   } else {
   selectPhrase = categories[0].puzzles[randNum].phrase
+  $(".initial-page").hide();
   $("#hint").html(movieQuotes.puzzles[randNum].hint);
   $("#correctness").html("");
   $(".wheel").show();
@@ -288,6 +289,7 @@ $("#philosophers").click(function() {
     $("#correctness").show().html("Out of philosophy questions! Try another category!");
   } else {
   selectPhrase = categories[1].puzzles[randNum].phrase
+  $(".initial-page").hide();
   $("#hint").html(philosophers.puzzles[randNum].hint);
   $("#correctness").html("");
   $(".wheel").show();
@@ -304,10 +306,11 @@ $("#chemistry").click(function() {
     $("#correctness").show().html("Out of chemistry questions! Try another category!");
   } else{
     selectPhrase = chemistry.puzzles[randNum].phrase
+    $(".initial-page").hide();
     $("#hint").html(chemistry.puzzles[randNum].hint);
     $("#correctness").html("");
     $(".wheel").show();
-  $(".hint").show();
+    $(".hint").show();
     drawImg();
     makeBoard(selectPhrase);
   }
